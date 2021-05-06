@@ -56,6 +56,7 @@ def watch_voice(voice_queue):
                 continue
             except sr.RequestError as error_message:
                 print(f"Could not get results from Google Speech Recognition service: {error_message}")
+                continue
 
             if text and text != "":
                 voice_queue.put(text)
