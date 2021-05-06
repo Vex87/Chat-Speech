@@ -48,7 +48,15 @@ def watch_voice(voice_queue):
         with sr.Microphone() as source:
             print("listening...")
             text = r.listen(source)
-            text = r.recognize_google(text)
+
+            try:
+                text = r.recognize_google(text)
+            except sr.UnknownValueError:
+                print("Cannot understand")
+                continue
+            except sr.RequestError as error_message:
+                print(f"Could not get results from Google Speech Recognition service: {error_message}")
+
             if text and text != "":
                 voice_queue.put(text)
 
@@ -65,3 +73,4 @@ def __main__():
 
 if __name__ == "__main__":
     __main__()
+
